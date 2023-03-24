@@ -1,22 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function CreateArea() {
-  const [notes, setNotes] = useState([]);
+function CreateArea(props) {
   const [note, setNote] = useState({ title: "", content: "" });
 
   function handleChange(event) {
     const { name, value } = event.target;
     setNote((prevNote) => {
-      return {...prevNote, [name]: value};
+      return { ...prevNote, [name]: value };
     });
   }
 
-  function handleSubmit(event){
+  function handleSubmit(event) {
     event.preventDefault();
-    setNotes((prevNotes) => {
-      return [...prevNotes, note]
-    });
-    setNote({ title: "", content: "" })
+    props.onAdd(note);
+    setNote({ title: "", content: "" });
   }
 
   return (
@@ -35,7 +32,7 @@ function CreateArea() {
           placeholder="Take a note..."
           rows="3"
         />
-        <button>Add</button>
+        <button type="submit">Add</button>
       </form>
     </div>
   );
